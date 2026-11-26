@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://jakubdyszkiewicz.github.io/isodev/config.schema.json
+# Codex with your host login and sessions.
+image: isodev-codex:latest
+build:
+  context: image
+volumes:
+  # Login, configuration and sessions, shared with the host.
+  - type: bind
+    source: ~/.codex
+    target: /root/.codex
+lifecycle:
+  on_exec:
+    # Alternative credentials, passed to commands when set on the host.
+    forward_env_vars: [OPENAI_API_KEY]

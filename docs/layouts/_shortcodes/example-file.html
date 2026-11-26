@@ -1,0 +1,16 @@
+{{- /*
+  Embeds a file from the repository's examples directory as a code block.
+
+  path: file path relative to examples/, for example "guides/codex/config.yaml"
+  lang: syntax highlighting language
+  name: file name shown above the code, defaults to the file's base name
+*/ -}}
+{{- $path := .Get "path" -}}
+{{- $name := .Get "name" | default (path.Base $path) -}}
+{{- with resources.Get (printf "examples/%s" $path) -}}
+  {{- $fence := "````" -}}
+  {{- $code := printf "%s%s {filename=%q}\n%s\n%s" $fence ($.Get "lang") $name (strings.TrimRight "\n" .Content) $fence -}}
+  {{- $.Page.RenderString $code -}}
+{{- else -}}
+  {{- errorf "%s: example file %q not found" $.Position $path -}}
+{{- end -}}

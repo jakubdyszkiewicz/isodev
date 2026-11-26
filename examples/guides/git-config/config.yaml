@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://jakubdyszkiewicz.github.io/isodev/config.schema.json
+# Your host Git config: identity, settings and global ignore file.
+image: isodev-git-config:latest
+build:
+  context: image
+volumes:
+  # Your Git settings, included by hooks/git.sh.
+  - type: bind
+    source: ~/.gitconfig
+    target: /run/secrets/host-gitconfig
+    read_only: true
+  # Optional: your global ignore file, the one `git config --global
+  # core.excludesFile` names, or ~/.config/git/ignore when that's unset.
+  - type: bind
+    source: ~/.config/git/ignore
+    target: /run/secrets/host-gitignore
+    read_only: true
+lifecycle:
+  on_create:
+    scripts:
+      - file: hooks/git.sh

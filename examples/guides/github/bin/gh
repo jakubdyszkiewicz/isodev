@@ -1,0 +1,12 @@
+#!/bin/sh
+# Passes the token in /run/secrets/github/token to the real gh. It reads the
+# token on every call, so a replaced token takes effect immediately.
+set -eu
+token=/run/secrets/github/token
+if [ ! -s "$token" ]; then
+  echo "GitHub token missing or empty: $token" >&2
+  exit 1
+fi
+GH_TOKEN="$(cat "$token")"
+export GH_TOKEN
+exec /root/.local/share/mise/shims/gh "$@"

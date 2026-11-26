@@ -1,0 +1,66 @@
+# Documentation site, published to GitHub Pages by .github/workflows/docs.yml.
+# Preview locally with `mise run docs:serve`.
+baseURL: https://jakubdyszkiewicz.github.io/isodev/
+title: Isodev
+locale: en-US
+enableGitInfo: true
+
+module:
+  imports:
+    - path: github.com/imfing/hextra
+  # Custom mounts replace Hugo's defaults, so the defaults this site uses are
+  # listed too. ../examples lets pages embed the tested example files.
+  mounts:
+    - source: content
+      target: content
+    - source: static
+      target: static
+    - source: layouts
+      target: layouts
+    - source: ../examples
+      target: assets/examples
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true # Allow the HTML comments that mark generated sections.
+  highlight:
+    noClasses: false
+
+menu:
+  main:
+    - name: Documentation
+      pageRef: /docs
+      weight: 1
+    - name: Search
+      weight: 2
+      params:
+        type: search
+    - name: GitHub
+      url: https://github.com/jakubdyszkiewicz/isodev
+      weight: 3
+      params:
+        icon: github
+
+params:
+  description: One Docker container per Git worktree, for running development environments and coding agents side by side.
+  navbar:
+    displayTitle: true
+    displayLogo: false
+  footer:
+    displayCopyright: false
+    displayPoweredBy: true
+  theme:
+    default: system
+    displayToggle: true
+  editURL:
+    enable: true
+    base: https://github.com/jakubdyszkiewicz/isodev/edit/main/docs/content
+  displayUpdatedDate: true
+  highlight:
+    copy:
+      enable: true
+      display: hover
+  search:
+    enable: true
+    type: flexsearch

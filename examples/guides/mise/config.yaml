@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=https://jakubdyszkiewicz.github.io/isodev/config.schema.json
+# Each project's toolchain, installed with mise when its container is created.
+image: isodev-mise:latest
+build:
+  context: image
+lifecycle:
+  on_create:
+    scripts:
+      - file: hooks/mise.sh

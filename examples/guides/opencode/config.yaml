@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://jakubdyszkiewicz.github.io/isodev/config.schema.json
+# OpenCode with your host credentials.
+image: isodev-opencode:latest
+build:
+  context: image
+volumes:
+  # Provider credentials from `opencode auth login` on the host, copied into
+  # each new container by hooks/opencode.sh.
+  - type: bind
+    source: ~/.local/share/opencode/auth.json
+    target: /run/secrets/opencode-auth.json
+    read_only: true
+lifecycle:
+  on_create:
+    scripts:
+      - file: hooks/opencode.sh

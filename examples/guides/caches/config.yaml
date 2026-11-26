@@ -1,0 +1,34 @@
+# yaml-language-server: $schema=https://jakubdyszkiewicz.github.io/isodev/config.schema.json
+# Download and build caches shared by all containers, on top of the mise guide.
+# Each cache is a named Docker volume, which Docker creates on first use and
+# Isodev never removes.
+image: isodev-caches:latest
+build:
+  context: image
+environment:
+  # Go keeps modules in ~/go/pkg/mod by default; use the shared cache instead.
+  GOMODCACHE: /root/.cache/go-mod
+volumes:
+  # Tool downloads made by mise.
+  - type: volume
+    source: isodev-cache-mise
+    target: /root/.cache/mise
+  # Go modules and build cache.
+  - type: volume
+    source: isodev-cache-go-mod
+    target: /root/.cache/go-mod
+  - type: volume
+    source: isodev-cache-go-build
+    target: /root/.cache/go-build
+  # npm package cache.
+  - type: volume
+    source: isodev-cache-npm
+    target: /root/.npm/_cacache
+  # Playwright browser downloads.
+  - type: volume
+    source: isodev-cache-ms-playwright
+    target: /root/.cache/ms-playwright
+lifecycle:
+  on_create:
+    scripts:
+      - file: hooks/mise.sh

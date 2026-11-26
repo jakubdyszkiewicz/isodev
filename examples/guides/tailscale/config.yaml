@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=https://jakubdyszkiewicz.github.io/isodev/config.schema.json
+# Each container on your tailnet, logged in with tailscale-auth-key.
+image: isodev-tailscale:latest
+build:
+  context: image
+# Tailscale needs to create a network device in the container.
+privileged: true
+volumes:
+  - type: bind
+    source: tailscale-auth-key
+    target: /run/secrets/tailscale-auth-key
+    read_only: true
+  # Tailscale's state, private to each container, so its device and address
+  # survive isodev stop and up --recreate. isodev down removes it.
+  - type: volume
+    target: /var/lib/tailscale
+lifecycle:
+  on_start:
+    scripts:
+      - file: hooks/tailscale.sh

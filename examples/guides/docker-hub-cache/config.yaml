@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://jakubdyszkiewicz.github.io/isodev/config.schema.json
+# A private Docker daemon in each container that pulls Docker Hub images through
+# a cache on the host, on top of the Docker-in-Docker guide.
+image: isodev-docker-hub-cache:latest
+build:
+  context: image
+# Required by the inner Docker daemon.
+privileged: true
+volumes:
+  # A private volume for each container's /var/lib/docker, on Docker's own disk,
+  # so the inner daemon can use overlay2. It's kept by isodev up --recreate and
+  # removed by isodev down.
+  - type: volume
+    target: /var/lib/docker
+environment:
+  # Port of the Docker Hub pull-through cache on the host.
+  DOCKER_MIRROR_PORT: "5000"
+lifecycle:
+  on_start:
+    scripts:
+      - file: hooks/docker.sh

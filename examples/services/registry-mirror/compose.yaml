@@ -1,0 +1,17 @@
+# Docker Hub pull-through cache for the Docker Hub cache guide.
+# Run: docker compose up -d
+services:
+  registry-mirror:
+    image: registry:3
+    # Port 5000 on all host interfaces, so Isodev containers can reach it
+    # through their network's gateway.
+    network_mode: host
+    environment:
+      OTEL_TRACES_EXPORTER: none # registry 3 exports traces to localhost:4318 by default
+    volumes:
+      - ./config.yml:/etc/distribution/config.yml:ro
+      - registry-mirror:/var/lib/registry
+    restart: unless-stopped
+
+volumes:
+  registry-mirror:

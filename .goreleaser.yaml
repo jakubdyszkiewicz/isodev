@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=https://goreleaser.com/static/schema.json
+# Release configuration. Try it locally with `mise run snapshot`; pushing a
+# v* tag publishes a GitHub release through .github/workflows/release.yml.
+version: 2
+
+project_name: isodev
+
+builds:
+  - main: .
+    binary: isodev
+    env:
+      - CGO_ENABLED=0
+    goos: [linux, darwin]
+    goarch: [amd64, arm64]
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w -X main.version={{ .Version }} -X main.commit={{ .Commit }} -X main.date={{ .Date }}
+    # Reproducible builds: binaries get the commit time, not the build time.
+    mod_timestamp: "{{ .CommitTimestamp }}"
+
+archives:
+  # Default names: isodev_<version>_<os>_<arch>.tar.gz, including LICENSE and README.md.
+  - formats: [tar.gz]
+
+checksum:
+  algorithm: sha256
+
+changelog:
+  use: github-native

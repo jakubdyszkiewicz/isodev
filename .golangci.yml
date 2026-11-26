@@ -1,0 +1,95 @@
+version: "2"
+
+run:
+  timeout: 5m
+
+linters:
+  default: none
+  enable:
+    - depguard
+    - dupl
+    - errcheck
+    - forbidigo
+    - gocritic
+    - gomodguard_v2
+    - govet
+    - gosec
+    - importas
+    - makezero
+    - misspell
+    - nolintlint
+    - nonamedreturns
+    - nosprintfhostport
+    - revive
+    - staticcheck
+    - unconvert
+    - unparam
+    - unused
+    - usestdlibvars
+    - whitespace
+  settings:
+    depguard:
+      rules:
+        # Isodev has few dependencies; adding one should be a deliberate choice.
+        main:
+          files:
+            - "$all"
+          allow:
+            - "$gostd"
+            - "github.com/jakubdyszkiewicz/isodev"
+            - "github.com/spf13/cobra"
+            - "github.com/spf13/pflag"
+            - "github.com/tailscale/hujson"
+            - "gopkg.in/yaml.v3"
+            - "github.com/invopop/jsonschema"
+        # Containers know nothing about Git worktrees, integrations or the CLI.
+        container:
+          files:
+            - "**/internal/container/**"
+          deny:
+            - pkg: "github.com/jakubdyszkiewicz/isodev/internal/cli"
+              desc: "container must not depend on the CLI"
+            - pkg: "github.com/jakubdyszkiewicz/isodev/internal/integration"
+              desc: "container must not depend on integrations; use internal/workspace"
+            - pkg: "github.com/jakubdyszkiewicz/isodev/internal/workspace"
+              desc: "workspace builds on container, not the other way round"
+        # Configuration and helpers sit below everything else.
+        foundation:
+          files:
+            - "**/internal/config/**"
+            - "**/internal/paths/**"
+            - "**/internal/shell/**"
+            - "**/internal/fsutil/**"
+            - "**/internal/gendoc/**"
+          deny:
+            - pkg: "github.com/jakubdyszkiewicz/isodev/internal/cli"
+              desc: "foundation packages must not depend on the CLI"
+            - pkg: "github.com/jakubdyszkiewicz/isodev/internal/container"
+              desc: "foundation packages must not depend on containers"
+            - pkg: "github.com/jakubdyszkiewicz/isodev/internal/integration"
+              desc: "foundation packages must not depend on integrations"
+            - pkg: "github.com/jakubdyszkiewicz/isodev/internal/workspace"
+              desc: "foundation packages must not depend on workspaces"
+    gosec:
+      excludes:
+        # Isodev runs commands and reads files that the user chose: Docker and
+        # Git with workspace paths, hook scripts and mounted sources.
+        - G204 # Subprocess launched with variable
+        - G304 # File path provided as taint input
+        - G703 # Path traversal via taint analysis
+    revive:
+      rules:
+        - name: exported
+          disabled: true
+        - name: package-comments
+          disabled: true
+        - name: var-naming
+          disabled: true
+  exclusions:
+    # Unchecked errors from fmt.Fprint*, Close, os.Remove and similar.
+    presets:
+      - std-error-handling
+    rules:
+      - path: _test\.go
+        linters:
+          - gosec

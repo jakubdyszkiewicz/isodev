@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://jakubdyszkiewicz.github.io/isodev/config.schema.json
+# gh and git over HTTPS, authenticated with the token in github-token/token.
+image: isodev-github:latest
+build:
+  context: image
+volumes:
+  # The directory, not the file, so that a replaced token is visible.
+  - type: bind
+    source: github-token
+    target: /run/secrets/github
+    read_only: true
+  # The wrapper that passes the token to gh, ahead of /usr/bin/gh on PATH.
+  - type: bind
+    source: bin/gh
+    target: /usr/local/bin/gh
+    read_only: true

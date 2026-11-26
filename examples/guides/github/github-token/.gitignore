@@ -1,0 +1,3 @@
+# Keep the token out of version control.
+*
+!.gitignore

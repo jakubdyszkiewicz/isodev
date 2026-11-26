@@ -1,0 +1,3 @@
+#!/bin/bash
+# An example tool that prints a variable from its environment.
+echo "MYTOOL_VAR=${MYTOOL_VAR:-<not set>}"

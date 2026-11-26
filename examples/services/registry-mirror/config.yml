@@ -1,0 +1,22 @@
+version: 0.1
+log:
+  level: info
+storage:
+  # Required in proxy mode: expired cache entries are removed after proxy.ttl.
+  delete:
+    enabled: true
+  cache:
+    blobdescriptor: inmemory
+  filesystem:
+    rootdirectory: /var/lib/registry
+http:
+  addr: 0.0.0.0:5000
+health:
+  storagedriver:
+    enabled: true
+    interval: 10s
+    threshold: 3
+proxy:
+  # Docker Hub only, pulled anonymously, so it serves public images only.
+  remoteurl: https://registry-1.docker.io
+  ttl: 168h

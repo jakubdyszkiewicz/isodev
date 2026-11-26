@@ -1,0 +1,185 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jakubdyszkiewicz.github.io/isodev/config.schema.json",
+  "$defs": {
+    "Build": {
+      "properties": {
+        "context": {
+          "type": "string",
+          "description": "Build context directory, which must exist. It is sent to Docker, so keep credentials and hook scripts outside it."
+        },
+        "dockerfile": {
+          "type": "string",
+          "description": "Dockerfile path, relative to the context.",
+          "default": "Dockerfile"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "context"
+      ],
+      "description": "Build configures building the image."
+    },
+    "Exec": {
+      "properties": {
+        "forward_env_vars": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "description": "Names of environment variables copied from the invoking process into each command. Values are read on every invocation and passed by name, so they don't appear in process arguments. Unset variables are omitted; empty values are forwarded. Forward secrets only to containers and commands you trust."
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "description": "Exec configures commands that isodev runs in containers."
+    },
+    "GitWorktree": {
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": [
+            "none",
+            "mount-common-dir",
+            "replace"
+          ],
+          "description": "`none` mounts only the worktree, so Git doesn't work in the container. `mount-common-dir` also mounts the main repository's Git directory, Git's common directory, read-write at its host path, and the workspace at its host path. `replace` replaces the worktree's link with an independent repository before the container is created, and `isodev down` restores it. The mode applies when a container is created, so switch modes with `isodev up --recreate`; a replaced worktree is then restored first if the new mode isn't `replace`. When unset in a worktree, `isodev up` warns and uses `none`, and Paseo and Zed setup fail."
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "description": "GitWorktree configures how linked Git worktrees work in containers."
+    },
+    "Lifecycle": {
+      "properties": {
+        "on_create": {
+          "$ref": "#/$defs/Stage",
+          "description": "Runs once in each new container, after `on_start`. If a script fails, the rest are skipped and the new container and its network are removed. Changes apply only to new containers."
+        },
+        "on_start": {
+          "$ref": "#/$defs/Stage",
+          "description": "Runs in each new container before `on_create`, and again whenever Isodev starts a stopped container with `up`, `start`, or Paseo or Zed setup, using the current configuration. If a script fails, the rest are skipped: a new container and its network are removed, and a started container is stopped again. Starting a container with `docker start` skips it."
+        },
+        "on_exec": {
+          "$ref": "#/$defs/Exec",
+          "description": "Applied each time Isodev runs a command in a container: `isodev exec`, and Paseo and Zed agent launches. Changes apply without recreating the container."
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "description": "Lifecycle configures the container lifecycle."
+    },
+    "Mount": {
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "bind",
+            "volume"
+          ],
+          "description": "`bind` mounts a host directory or file. `volume` mounts a Docker volume, which lives on Docker's own disk, so it works for data that needs a real Linux filesystem, such as an inner Docker daemon's `/var/lib/docker`, on macOS too."
+        },
+        "source": {
+          "type": "string",
+          "description": "For `bind`, the host path, which must exist; `~/` is the host user's home, and relative paths are relative to `~/.config/isodev`. For `volume`, the name of a Docker volume shared by all containers and kept when they are removed. Without a source, a `volume` is private to the container: it is kept by `isodev up --recreate`, emptied by `up --recreate --renew-volumes`, and removed by `isodev down`."
+        },
+        "target": {
+          "type": "string",
+          "description": "Absolute path in the container. It must not overlap the workspace."
+        },
+        "read_only": {
+          "type": "boolean",
+          "description": "Mount read-only."
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "type",
+        "target"
+      ],
+      "description": "Mount is a host path or Docker volume mounted into each new container."
+    },
+    "Script": {
+      "properties": {
+        "file": {
+          "type": "string",
+          "description": "Script path. `~/` is the host user's home, and relative paths are relative to `~/.config/isodev`. The script runs with `sh`, with standard input from `/dev/null`; its shebang is ignored. `ISODEV_PROBE` is `1` in the Paseo probe container and `0` otherwise. Output goes to stderr."
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "file"
+      ],
+      "description": "Script is a host-side shell script streamed to `sh` in the container, with the workspace as the working directory."
+    },
+    "Stage": {
+      "properties": {
+        "scripts": {
+          "items": {
+            "$ref": "#/$defs/Script"
+          },
+          "type": "array",
+          "description": "Scripts that run in order, each streamed to `sh` in the container with the workspace as the working directory."
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "description": "Stage is a lifecycle stage that runs scripts."
+    }
+  },
+  "properties": {
+    "image": {
+      "type": "string",
+      "description": "Image for new containers. The `ISODEV_IMAGE` environment variable overrides it. Required when `build` is set, because it names the built image.",
+      "default": "ubuntu:24.04"
+    },
+    "build": {
+      "$ref": "#/$defs/Build",
+      "description": "Build the image before creating each new container, with `docker build --tag IMAGE --file DOCKERFILE CONTEXT`. Docker reuses cached layers and build output goes to stderr. A failed build prevents creation. Existing containers are not rebuilt."
+    },
+    "command": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array",
+      "description": "Command arguments passed to the image. The container must keep running so that lifecycle scripts and agent commands can run in it. Containers run with `--init`.",
+      "default": [
+        "sleep",
+        "infinity"
+      ]
+    },
+    "privileged": {
+      "type": "boolean",
+      "description": "Run containers with `--privileged`, for example for Docker-in-Docker. Privileged containers have broad access to the host."
+    },
+    "environment": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "type": "object",
+      "description": "Fixed environment variables set when a container is created. Values are strings; variable interpolation is not supported."
+    },
+    "volumes": {
+      "items": {
+        "$ref": "#/$defs/Mount"
+      },
+      "type": "array",
+      "description": "Mounts added to each new container, in the Compose long form: host directories and files, and Docker volumes. Isodev adds the workspace mount itself. Mounted sources are visible to the container even when read-only."
+    },
+    "lifecycle": {
+      "$ref": "#/$defs/Lifecycle",
+      "description": "What Isodev does when it creates or starts a container, and when it runs a command in one."
+    },
+    "git_worktree": {
+      "$ref": "#/$defs/GitWorktree",
+      "description": "How Isodev handles a workspace that is a linked Git worktree. A worktree's `.git` file points into the main repository's Git directory, which the container doesn't have unless Isodev provides it."
+    }
+  },
+  "additionalProperties": false,
+  "type": "object",
+  "title": "Isodev configuration",
+  "description": "Global isodev configuration in ~/.config/isodev/config.yaml."
+}
