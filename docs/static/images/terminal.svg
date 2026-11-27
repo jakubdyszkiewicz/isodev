@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" role="img" aria-labelledby="title desc">
+  <title id="title">An Isodev session</title>
+  <desc id="desc">Two Git worktrees each get their own container with isodev up, an agent runs in one of them, and isodev ps lists the containers.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1e293b"/>
+      <stop offset="1" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+  <rect width="760" height="420" rx="14" fill="url(#bg)"/>
+  <rect x="0.5" y="0.5" width="759" height="419" rx="13.5" fill="none" stroke="#334155"/>
+  <circle cx="26" cy="24" r="6" fill="#f87171"/>
+  <circle cx="46" cy="24" r="6" fill="#fbbf24"/>
+  <circle cx="66" cy="24" r="6" fill="#34d399"/>
+  <text x="380" y="29" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#94a3b8">~/src/app</text>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15">
+    <text x="28" y="78"><tspan fill="#38bdf8">$</tspan><tspan fill="#e2e8f0"> git worktree add ../feature-a</tspan></text>
+    <text x="28" y="106"><tspan fill="#38bdf8">$</tspan><tspan fill="#e2e8f0"> isodev up --workspace ../feature-a</tspan></text>
+    <text x="28" y="132" fill="#94a3b8">Container isodev-3f9c1a2b7d4e5f60&#160;&#160;<tspan fill="#34d399">Created</tspan></text>
+    <text x="28" y="166"><tspan fill="#38bdf8">$</tspan><tspan fill="#e2e8f0"> isodev up --workspace ../feature-b</tspan></text>
+    <text x="28" y="192" fill="#94a3b8">Container isodev-7d4e5f601a2b3c4d&#160;&#160;<tspan fill="#34d399">Created</tspan></text>
+    <text x="28" y="226"><tspan fill="#38bdf8">$</tspan><tspan fill="#e2e8f0"> isodev exec --workspace ../feature-a claude</tspan><tspan fill="#64748b">&#160;&#160;&#160;# in its own container</tspan></text>
+    <text x="28" y="260"><tspan fill="#38bdf8">$</tspan><tspan fill="#e2e8f0"> isodev ps</tspan></text>
+    <text x="28" y="288" fill="#64748b">WORKSPACE<tspan x="230">STATUS</tspan><tspan x="380">CONTAINER</tspan></text>
+    <text x="28" y="312" fill="#cbd5e1">~/src/feature-a<tspan x="230" fill="#34d399">Up 2 minutes</tspan><tspan x="380">isodev-3f9c1a2b7d4e5f60</tspan></text>
+    <text x="28" y="336" fill="#cbd5e1">~/src/feature-b<tspan x="230" fill="#34d399">Up 1 minute</tspan><tspan x="380">isodev-7d4e5f601a2b3c4d</tspan></text>
+    <text x="28" y="370"><tspan fill="#38bdf8">$</tspan><tspan fill="#e2e8f0"> </tspan><tspan fill="#e2e8f0">▍</tspan></text>
+  </g>
+</svg>

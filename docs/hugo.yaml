@@ -46,7 +46,12 @@ params:
   description: One Docker container per Git worktree, for running development environments and coding agents side by side.
   navbar:
     displayTitle: true
-    displayLogo: false
+    displayLogo: true
+    logo:
+      path: images/logo.svg
+      dark: images/logo.svg # The cube works on both backgrounds.
+      width: 24
+      height: 24
   footer:
     displayCopyright: false
     displayPoweredBy: true

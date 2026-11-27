@@ -1,4 +1,4 @@
-# Isodev
+# <img src="docs/static/images/logo.svg" alt="" width="36" height="36" align="top"> Isodev
 
 Isodev gives each Git worktree its own Docker container, so you can run development environments and coding agents, such as Claude Code, Codex and OpenCode, side by side on the same repository. Each container has its own filesystem, network, processes and, if you want, its own Docker daemon, while the workspace files stay on the host.
 
