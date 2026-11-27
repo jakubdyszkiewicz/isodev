@@ -11,11 +11,12 @@ It makes Git work in linked worktrees inside the container, and integrates with 
 
 ## Install
 
-Download an archive from [GitHub Releases](https://github.com/jakubdyszkiewicz/isodev/releases), or install with Go 1.24 or later:
-
 ```sh
-go install github.com/jakubdyszkiewicz/isodev@latest
+brew install jakubdyszkiewicz/tap/isodev           # Homebrew, on macOS
+mise use --global github:jakubdyszkiewicz/isodev   # mise, on Linux and macOS
 ```
+
+Archives for Linux and macOS are on [GitHub Releases](https://github.com/jakubdyszkiewicz/isodev/releases). With Go 1.24 or later, you can also run `go install github.com/jakubdyszkiewicz/isodev@latest`.
 
 ## Quick start
 

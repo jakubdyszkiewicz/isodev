@@ -6,8 +6,20 @@ weight: 2
 ## Install
 
 {{< tabs >}}
+  {{< tab name="Homebrew (macOS)" >}}
+```sh
+brew install jakubdyszkiewicz/tap/isodev
+```
+  {{< /tab >}}
+  {{< tab name="mise" >}}
+With [mise](https://mise.jdx.dev), on Linux and macOS:
+
+```sh
+mise use --global github:jakubdyszkiewicz/isodev
+```
+  {{< /tab >}}
   {{< tab name="Release archive" >}}
-Download the archive for your platform from [GitHub Releases](https://github.com/jakubdyszkiewicz/isodev/releases), for example `isodev_1.0.0_linux_amd64.tar.gz`, and put `isodev` on your `PATH`. Archives are available for Linux and macOS on amd64 and arm64, and each release includes a SHA-256 checksums file.
+Download the archive for your platform from [GitHub Releases](https://github.com/jakubdyszkiewicz/isodev/releases), for example `isodev_0.1.0_linux_amd64.tar.gz`, and put `isodev` on your `PATH`. Archives are available for Linux and macOS on amd64 and arm64, and each release includes a SHA-256 checksums file.
   {{< /tab >}}
   {{< tab name="Go" >}}
 With Go 1.24 or later:

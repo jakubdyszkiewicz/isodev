@@ -28,3 +28,25 @@ checksum:
 
 changelog:
   use: github-native
+
+# `brew install jakubdyszkiewicz/tap/isodev` installs the release archives
+# through a cask in github.com/jakubdyszkiewicz/homebrew-tap. Publishing needs
+# HOMEBREW_TAP_GITHUB_TOKEN, a token that can push to that repository.
+homebrew_casks:
+  - name: isodev
+    binaries: [isodev]
+    homepage: https://isodev.dyszkiewicz.me/
+    description: One container per Git worktree for parallel work
+    repository:
+      owner: jakubdyszkiewicz
+      name: homebrew-tap
+      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
+    commit_msg_template: "isodev {{ .Tag }}"
+    # The binaries aren't signed or notarized, so macOS would refuse to run
+    # them after a download; remove the quarantine attribute on install.
+    hooks:
+      post:
+        install_steps: |
+          on_macos do
+            run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{ .StagedPath }}/isodev"]
+          end
