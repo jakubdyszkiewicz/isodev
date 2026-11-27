@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://jakubdyszkiewicz.github.io/isodev/config.schema.json
+# yaml-language-server: $schema=https://isodev.dyszkiewicz.me/config.schema.json
 # Your dotfiles, built into the image.
 image: isodev-dotfiles:latest
 build:

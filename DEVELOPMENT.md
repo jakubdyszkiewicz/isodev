@@ -31,12 +31,12 @@ ISODEV_EXAMPLES_TEST=1 go test ./internal/config/  # Build every example image
 
 ## Documentation
 
-The [documentation site](https://jakubdyszkiewicz.github.io/isodev/) is built with [Hugo](https://gohugo.io) and the [Hextra](https://imfing.github.io/hextra/) theme from [`docs/`](docs/), and published to GitHub Pages on every push to `main`.
+The [documentation site](https://isodev.dyszkiewicz.me/) is built with [Hugo](https://gohugo.io) and the [Hextra](https://imfing.github.io/hextra/) theme from [`docs/`](docs/), and published to GitHub Pages on every push to `main`.
 
 Two references are generated, so they can't drift from the code:
 
-- The [command reference](https://jakubdyszkiewicz.github.io/isodev/docs/commands/) comes from the command definitions and help texts in [`internal/cli`](internal/cli/).
-- The [configuration reference](https://jakubdyszkiewicz.github.io/isodev/docs/configuration/) and JSON Schema come from the field comments in [`internal/config/config.go`](internal/config/config.go).
+- The [command reference](https://isodev.dyszkiewicz.me/docs/commands/) comes from the command definitions and help texts in [`internal/cli`](internal/cli/).
+- The [configuration reference](https://isodev.dyszkiewicz.me/docs/configuration/) and JSON Schema come from the field comments in [`internal/config/config.go`](internal/config/config.go).
 
 The guides embed their complete configurations from [`examples/guides`](examples/guides/), and host services from [`examples/services`](examples/services/), so the files on the site are the files in the repository.
 

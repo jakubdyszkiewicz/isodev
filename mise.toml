@@ -40,7 +40,7 @@ run = "hugo server --source docs --bind 0.0.0.0 --baseURL / --appendPort=false -
 description = "Build the documentation site into docs/public/ and check its internal links"
 run = [
   "rm -rf docs/public",
-  "hugo --source docs --minify --gc --destination public/isodev",
+  "hugo --source docs --minify --gc",
   "lychee --offline --no-progress --root-dir \"$PWD/docs/public\" --include-fragments --index-files index.html docs/public",
 ]
 

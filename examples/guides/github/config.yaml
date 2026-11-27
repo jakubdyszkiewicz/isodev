@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://jakubdyszkiewicz.github.io/isodev/config.schema.json
+# yaml-language-server: $schema=https://isodev.dyszkiewicz.me/config.schema.json
 # gh and git over HTTPS, authenticated with the token in github-token/token.
 image: isodev-github:latest
 build:

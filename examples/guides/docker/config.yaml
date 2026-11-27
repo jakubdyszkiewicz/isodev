@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://jakubdyszkiewicz.github.io/isodev/config.schema.json
+# yaml-language-server: $schema=https://isodev.dyszkiewicz.me/config.schema.json
 # A private Docker daemon in each container.
 image: isodev-docker:latest
 build:

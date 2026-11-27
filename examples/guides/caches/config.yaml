@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://jakubdyszkiewicz.github.io/isodev/config.schema.json
+# yaml-language-server: $schema=https://isodev.dyszkiewicz.me/config.schema.json
 # Download and build caches shared by all containers, on top of the mise guide.
 # Each cache is a named Docker volume, which Docker creates on first use and
 # Isodev never removes.

@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://jakubdyszkiewicz.github.io/isodev/config.schema.json
+# yaml-language-server: $schema=https://isodev.dyszkiewicz.me/config.schema.json
 # A command-line tool from the host, with the variable it needs.
 image: isodev-host-tools:latest
 build:

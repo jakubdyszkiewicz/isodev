@@ -38,10 +38,10 @@ The [guides](../guides) have complete, tested configurations for common setups.
 
 ## Editor support
 
-[`config.schema.json`](https://jakubdyszkiewicz.github.io/isodev/config.schema.json) is a JSON Schema for the file. To get completion, hover documentation and validation in editors that use yaml-language-server, such as Zed, VS Code and Neovim, start your `config.yaml` with:
+[`config.schema.json`](https://isodev.dyszkiewicz.me/config.schema.json) is a JSON Schema for the file. To get completion, hover documentation and validation in editors that use yaml-language-server, such as Zed, VS Code and Neovim, start your `config.yaml` with:
 
 ```yaml
-# yaml-language-server: $schema=https://jakubdyszkiewicz.github.io/isodev/config.schema.json
+# yaml-language-server: $schema=https://isodev.dyszkiewicz.me/config.schema.json
 ```
 
 ## Paths

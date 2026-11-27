@@ -4,10 +4,10 @@ Isodev gives each Git worktree its own Docker container, so you can run developm
 
 It makes Git work in linked worktrees inside the container, and integrates with [Paseo](https://paseo.sh) and [Zed](https://zed.dev). Isodev runs on Linux and macOS and requires Docker.
 
-**📖 Documentation: https://jakubdyszkiewicz.github.io/isodev/**
+**📖 Documentation: https://isodev.dyszkiewicz.me/**
 
 > [!WARNING]
-> Isodev isolates workspaces from each other and from the host. It is not a sandbox for untrusted code; see [Security](https://jakubdyszkiewicz.github.io/isodev/docs/security/).
+> Isodev isolates workspaces from each other and from the host. It is not a sandbox for untrusted code; see [Security](https://isodev.dyszkiewicz.me/docs/security/).
 
 ## Install
 
@@ -26,7 +26,7 @@ isodev enter     # Open a shell in it
 isodev down      # Remove the container; workspace files stay
 ```
 
-The default image is plain `ubuntu:24.04`. To add agents, credentials, Docker-in-Docker and more, follow the [guides](https://jakubdyszkiewicz.github.io/isodev/docs/guides/).
+The default image is plain `ubuntu:24.04`. To add agents, credentials, Docker-in-Docker and more, follow the [guides](https://isodev.dyszkiewicz.me/docs/guides/).
 
 ## Contributing
 

@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://jakubdyszkiewicz.github.io/isodev/config.schema.json
+# yaml-language-server: $schema=https://isodev.dyszkiewicz.me/config.schema.json
 # Each container on your tailnet, logged in with tailscale-auth-key.
 image: isodev-tailscale:latest
 build:

@@ -17,7 +17,7 @@ import (
 )
 
 const (
-	schemaID  = "https://jakubdyszkiewicz.github.io/isodev/config.schema.json"
+	schemaID  = "https://isodev.dyszkiewicz.me/config.schema.json"
 	docSource = "the field comments in internal/config/config.go"
 )
 

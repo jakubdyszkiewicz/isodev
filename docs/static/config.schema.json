@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://jakubdyszkiewicz.github.io/isodev/config.schema.json",
+  "$id": "https://isodev.dyszkiewicz.me/config.schema.json",
   "$defs": {
     "Build": {
       "properties": {

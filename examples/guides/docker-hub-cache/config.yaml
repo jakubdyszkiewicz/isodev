@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://jakubdyszkiewicz.github.io/isodev/config.schema.json
+# yaml-language-server: $schema=https://isodev.dyszkiewicz.me/config.schema.json
 # A private Docker daemon in each container that pulls Docker Hub images through
 # a cache on the host, on top of the Docker-in-Docker guide.
 image: isodev-docker-hub-cache:latest

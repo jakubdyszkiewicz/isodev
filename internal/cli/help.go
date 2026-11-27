@@ -10,7 +10,7 @@ import "strings"
 // paragraphs joins help paragraphs with blank lines.
 func paragraphs(p ...string) string { return strings.Join(p, "\n\n") }
 
-const docsURL = "https://jakubdyszkiewicz.github.io/isodev/docs/"
+const docsURL = "https://isodev.dyszkiewicz.me/docs/"
 
 var (
 	rootLong = paragraphs(

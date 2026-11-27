@@ -1,6 +1,6 @@
 # Documentation site, published to GitHub Pages by .github/workflows/docs.yml.
 # Preview locally with `mise run docs:serve`.
-baseURL: https://jakubdyszkiewicz.github.io/isodev/
+baseURL: https://isodev.dyszkiewicz.me/
 title: Isodev
 locale: en-US
 enableGitInfo: true

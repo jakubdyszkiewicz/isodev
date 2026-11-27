@@ -17,7 +17,7 @@ With `-o json`, lists print a JSON array that includes each `workspace`, and oth
 
 `--dry-run` previews the external commands and file changes a command would make, without running them. Values that are only known during execution are shown as placeholders. Put it before the subcommand, for example `isodev --dry-run up`.
 
-Documentation: https://jakubdyszkiewicz.github.io/isodev/docs/
+Documentation: https://isodev.dyszkiewicz.me/docs/
 
 ```text
 isodev [flags]
@@ -141,7 +141,7 @@ Inspect the configuration
 
 Print the configuration from `~/.config/isodev/config.yaml` after applying defaults, resolving paths and applying the `ISODEV_IMAGE` override. The output includes environment values.
 
-Every field is described in the configuration reference: https://jakubdyszkiewicz.github.io/isodev/docs/configuration/
+Every field is described in the configuration reference: https://isodev.dyszkiewicz.me/docs/configuration/
 
 ```text
 isodev config show
